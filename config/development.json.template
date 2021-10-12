@@ -1,5 +1,5 @@
 {
-	"port": 7000,
+	"port": 2542,
 
 	"server": {
 		"domain": "http://localhost"
@@ -61,6 +61,5 @@
 		"private": "assets/private",
 		"public": "assets/public",
 		"emails": "assets/emails"
-	},
-
+	}
 }
