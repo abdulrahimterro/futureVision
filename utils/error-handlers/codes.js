@@ -7,5 +7,5 @@ module.exports = {
 	file: '05',
 	payment: '06',
 	// Start from 10 for models
-	
+	department: '11'
 };

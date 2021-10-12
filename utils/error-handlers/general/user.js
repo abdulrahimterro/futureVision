@@ -8,4 +8,9 @@ module.exports = {
 		code: codes.user + statusCodes.Item_Not_Found + '01',
 		msg: 'User not found.',
 	},
+	Exists: {
+		httpStatus: httpCodes.CONFLICT,
+		code: codes.user + statusCodes.Invalid_Operation + '01',
+		msg: 'User With email or phone number exists.',
+	},
 };

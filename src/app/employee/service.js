@@ -1,7 +1,7 @@
 const { Exception, errors, permissions, commonConstant } = require('utils');
 const { mongodb } = require('database');
 const mongoose = require('mongoose');
-const { Employee } = mongodb.Models;
+const { Employee, Department } = mongodb.Models;
 const { convertToDotNotation } = mongodb.utils;
 const FileService = require('../file/service');
 const { compare } = require('bcrypt');
@@ -43,7 +43,8 @@ class UserService {
 	async save(user) {
 		this.createdBy = "logedin User"
 		if (this.photo) this.photo = await this.photo.save(session);
-		const result = await new Employee(this).save();
+		const [result, depExist] = await Promise.all([new Employee(this).save(), Department.exists({ _id: this.department }), this.files.map((val) => val.write())]);
+		if (!depExist) throw new Exception(errors.department.Not_Found);
 		return { data: { id: result.id } };
 	}
 
@@ -53,7 +54,11 @@ class UserService {
 			if (this.photo) this.photo = await this.photo.save(session);
 			const result = await Employee.findOneAndUpdate({ _id }, this, { session, omitUndefined: true });
 			if (!result) throw new Exception(errors.user.Not_Found);
-			if (this.photo === null && result.photo) await FileService.delete(result.photo, session);
+			if (!this.photo && result.photo) {
+				await FileService.delete(result.photo, session);
+				console.log('ddddd')
+			}
+			await Promise.all(this.files.map((val) => val.write()));
 		});
 	}
 
@@ -68,7 +73,7 @@ class UserService {
 	}
 
 	static async getById(user, id) {
-		const result = await Employee.findById(id).populate({ path: 'photo', select: '-_id' });
+		const result = await Employee.findById(id).populate('photo department');
 		if (!result) throw new Exception(errors.user.Not_Found);
 		return { data: result };
 	}

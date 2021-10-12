@@ -22,6 +22,7 @@
 	"author": "UNIFI Solutions",
 	"license": "ISC",
 	"dependencies": {
+		"@casl/ability": "^5.4.3",
 		"aws-sdk": "^2.922.0",
 		"bcrypt": "^5.0.1",
 		"chalk": "^4.1.1",

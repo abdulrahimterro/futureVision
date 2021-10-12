@@ -3,4 +3,5 @@ module.exports = {
 	User: require('./User'),
 	File: require('./File'),
 	Session: require('./Session'),
+	Department: require('./Department')
 };

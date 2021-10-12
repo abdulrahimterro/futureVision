@@ -10,7 +10,7 @@ module.exports = {
 		general: { path: 'general' },
 		User: {
 			path: 'user',
-			avatar: { path: 'user/avatar', access: ['public'] },
+			photo: { path: 'user/photo', access: ['public'] },
 		},
 	},
 };

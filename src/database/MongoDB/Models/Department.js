@@ -5,7 +5,7 @@ const defaultOptions = require('../utils/defaultOptions');
 const Department = new Schema(
 	{
 		name: { type: String, required: true },
-
+		description: { type: String }
 	},
 	defaultOptions({ timestamps: true })
 );

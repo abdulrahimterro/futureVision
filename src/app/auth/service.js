@@ -17,8 +17,6 @@ class AuthService {
 			data.verificationCode = AuthService.verificationCode;
 			// data.verificationCode = randomSetCodeGenerator(6);
 			const user = await new UserService(data).save(session, true);
-
-
 			result = await this.#getTokens(user, session);
 			await sms.sendActivationCode(user.phone, data.verificationCode);
 		});
@@ -35,8 +33,6 @@ class AuthService {
 			// method 1 : phone & password
 			if (data.password) {
 				const verify = await compare(data.password, user.password);
-				console.log(data.password)
-				console.log(user.password)
 				if (!verify) throw new Exception(errors.auth.Invalid_Auth_Phone_Password);
 				result = { data: await this.#getTokens(user, session) };
 				return;

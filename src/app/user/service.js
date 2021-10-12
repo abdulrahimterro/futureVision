@@ -30,16 +30,12 @@ class UserService {
 	}
 
 	async save(session, returnNew = false) {
-		const result = await new User(this).save({ session });
+		const [result, exists] = await Promise.all([new User(this).save({ session }), User.exists({ $or: [{ email: this.email }, { phone: this.phone }] })])
+		if (exists) throw new Exception(errors.user.Exists);
 		if (returnNew) return result;
 		return { data: { id: result.id } };
 	}
 
-	async saveDriver(session, returnNew = false) {
-		const result = await new Driver(this).save({ session });
-		if (returnNew) return result;
-		return { data: { id: result.id } };
-	}
 
 	async update(user, _id) {
 		const session = await mongoose.startSession();

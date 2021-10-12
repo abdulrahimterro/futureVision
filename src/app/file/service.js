@@ -28,6 +28,7 @@ class FileService {
 	}
 
 	static uriGenerator({ name, path = false, isPrivate = false, refPath = 'general', ext = '' }) {
+		console.log(`${path ? (isPrivate ? privateAssetPath : publicAssetPath) : ''}/${refPath.path}/${name}.${ext}`)
 		return `${path ? (isPrivate ? privateAssetPath : publicAssetPath) : ''}/${refPath.path}/${name}.${ext}`;
 	}
 
